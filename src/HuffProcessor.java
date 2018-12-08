@@ -131,20 +131,19 @@ public class HuffProcessor {
 		//int bits;
 		HuffNode current = root;
 		//bits = current.myValue;
-		while(true) {
-			if(current.myLeft == null && current.myRight == null) {
-				out.writeBits(1, 1);
+
+		if(current.myLeft == null && current.myRight == null) {
+			out.writeBits(1, 1);
 				//not sure about this
-				out.writeBits(BITS_PER_WORD + 1, current.myValue);
+			out.writeBits(BITS_PER_WORD + 1, current.myValue);
 				//out.write(BITS_PER_WORD + 1);
-			}
-			else {
-				out.writeBits(1, 0);
-				writeHeader(root.myLeft, out);
-				writeHeader(root.myRight, out);
+		}
+		else {
+			out.writeBits(1, 0);
+			writeHeader(root.myLeft, out);
+			writeHeader(root.myRight, out);
 			}
 		}
-	}
 	
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		int bits = in.readBits(BITS_PER_INT);
