@@ -133,7 +133,7 @@ public class HuffProcessor {
 		//bits = current.myValue;
 		while(true) {
 			if(current.myLeft == null && current.myRight == null) {
-				out.write(1);
+				//out.write(1);
 				//not sure about this
 				out.writeBits(BITS_PER_WORD + 1, current.myValue);
 				//out.write(BITS_PER_WORD + 1);
@@ -154,9 +154,6 @@ public class HuffProcessor {
 		}
 		
 	}
-	
-	
-	
 	
 	
 	
