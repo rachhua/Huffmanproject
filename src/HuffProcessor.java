@@ -1,3 +1,4 @@
+import javax.swing.tree.TreeNode;
 
 /**
  * Although this class has a history of several years,
@@ -59,12 +60,37 @@ public class HuffProcessor {
 	 *            Buffered bit stream writing to the output file.
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out){
-
-		while (true){
-			int val = in.readBits(BITS_PER_WORD);
-			if (val == -1) break;
-			out.writeBits(BITS_PER_WORD, val);
+		
+		int bits = in.readBits(BITS_PER_INT);
+		if(bits != HUFF_TREE) {
+			throw new HuffException("illegal header starts with " + bits);
 		}
+		HuffNode root = readTreeHeader(in);
+		readCompressedBits(root, in, out);
 		out.close();
+
+//		while (true){
+//			int val = in.readBits(BITS_PER_WORD);
+//			if (val == -1) break;
+//			out.writeBits(BITS_PER_WORD, val);
+//		}
+//		out.close();
+	}
+	
+	public HuffNode readTreeHeader(BitInputStream in) {
+		int bit = in.readBits(1);
+		HuffNode root = new HuffNode(bit, 0);
+		if(bit == -1) {
+			throw new HuffException("bad input, no PSEUDO_EOF");
+		}
+		if(bit == 0) {
+			root.myLeft = readTreeHeader(in);
+			root.myRight = readTreeHeader(in);
+			return new HuffNode(0, 0, root.myLeft, root.myRight);
+		}
+		else {
+			int value = in.readBits(BITS_PER_WORD + 1);
+			return new HuffNode(value, 0, null, null);
+		}
 	}
 }

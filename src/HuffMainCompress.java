@@ -21,7 +21,5 @@ public class HuffMainCompress {
 				           bis.bitsRead(),bos.bitsWritten());
 		long diff = bis.bitsRead() - bos.bitsWritten();
 		System.out.printf("bits saved = %d\n",diff);
-		
-		System.out.println("checkingtoseeifthisworks");
 	}
 	}
