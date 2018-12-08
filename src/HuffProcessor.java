@@ -133,13 +133,13 @@ public class HuffProcessor {
 		//bits = current.myValue;
 		while(true) {
 			if(current.myLeft == null && current.myRight == null) {
-				//out.write(1);
+				out.writeBits(1, 1);
 				//not sure about this
 				out.writeBits(BITS_PER_WORD + 1, current.myValue);
 				//out.write(BITS_PER_WORD + 1);
 			}
 			else {
-				out.write(0);
+				out.writeBits(1, 0);
 				writeHeader(root.myLeft, out);
 				writeHeader(root.myRight, out);
 			}
