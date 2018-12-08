@@ -66,21 +66,22 @@ public class HuffProcessor {
 	}
 	
 	private int[] readForCounts(BitInputStream in) {
+//		for(int i = 0; i < freq.length; i = i + bits ) {
+//		freq[] = 
+//	}
+//	for(int i = bits; i < freq.length; i++) {
+//		while(bits != -1) {
+//			if(freq[])
+//		}
+//	}
 		int[] freq = new int[ALPH_SIZE + 1];
 		int bits = in.readBits(BITS_PER_WORD);
 		freq[PSEUDO_EOF] = 1;
-//		for(int i = 0; i < freq.length; i = i + bits ) {
-//			freq[] = 
-//		}
-//		for(int i = bits; i < freq.length; i++) {
-//			while(bits != -1) {
-//				if(freq[])
-//			}
-//		}
-		
-		while(bits != -1) {
-			 freq[bits] += 1;
-			 
+		while(true) {
+			if(bits == -1) {
+				break;
+		}
+		freq[bits] += 1;
 		}
 		return freq;
 	}
